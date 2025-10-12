@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "sudoku.h"
 
 #define N 9
 
 int tabuleiro[N][N];
+int tavuleiroOriginal[N][N];
 
 // Função pra verificar se um número pode ser colocado na posição
 
@@ -36,7 +38,7 @@ int pode_numero(int row, int col, int num) {
     return 1;
 }
  // Função pra encontrar o próximo vazio
-int ache_o_vazio(int * row, int * col){
+int ache_o_vazio(int *row, int *col){
     for (int i = 0; i < N; i++) {
         for (int j = 0 ; j < N; j++) {
             if (tabuleiro[i][j] == 0) {
@@ -46,4 +48,17 @@ int ache_o_vazio(int * row, int * col){
             }
         }
     }
+    return 0;
 }
+
+// Backtracking (Ideia de Davi) para preencher o tabuleiro
+int resolver_sudoku() {
+    int row, col;
+
+    if(!ache_o_vazio(&row, &col)) {
+        return 1;
+    }
+
+    return 0;
+}
+
