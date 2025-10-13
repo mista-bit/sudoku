@@ -6,7 +6,7 @@
 #define N 9
 
 int tabuleiro[N][N];
-int tavuleiroOriginal[N][N];
+int tabuleiroOriginal[N][N];
 
 // Função pra verificar se um número pode ser colocado na posição
 
