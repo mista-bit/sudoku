@@ -8,6 +8,7 @@
 #else
     #include <unistd.h>
     #define Sleep(x) usleep((x)*1000)  // compat: Sleep(ms) em sistemas Unix
+    
 #endif
 
 #define N 9
@@ -33,26 +34,6 @@ int pode_colocar(int grid[N][N], int linha, int coluna, int num) {
             if (grid[startLinha + i][startColuna + j] == num)
                 return 0;
 
-    return 1;
-}
-
-// backtracking recursivo para resolver o sudoku
-int resolver(int grid[N][N]) {
-    for (int linha = 0; linha < N; linha++) {
-        for (int coluna = 0; coluna < N; coluna++) {
-            if (grid[linha][coluna] == 0) {
-                for (int num = 1; num <= 9; num++) {
-                    if (pode_colocar(grid, linha, coluna, num)) {
-                        grid[linha][coluna] = num;
-                        if (resolver(grid))
-                            return 1;
-                        grid[linha][coluna] = 0; // backtrack
-                    }
-                }
-                return 0;
-            }
-        }
-    }
     return 1;
 }
 
@@ -235,7 +216,12 @@ int main() {
             jogo.tabuleiro[i][j] = 0;
 
     loading_animation(1);
-    gerar_completo(jogo.tabuleiro);
+    while (!gerar_completo(jogo.tabuleiro)) {
+        // Se falhar, limpa o grid e tenta novamente
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                jogo.tabuleiro[i][j] = 0;
+    }
     copiar_grid(jogo.tabuleiro, jogo.solucao);
 
     printf("Dificuldade:\n 1 - Fácil\n 2 - Normal\n 3 - Difícil\n 4 - Impossível\n");
